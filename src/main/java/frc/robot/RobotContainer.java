@@ -156,14 +156,14 @@ public class RobotContainer {
     SmartDashboard.putNumber("shoot speed", 0);
 
   // shoot close
-    Player1.rightTrigger().whileTrue(new ParallelCommandGroup(
+    Player1.x().whileTrue(new ParallelCommandGroup(
       new Shoot(shoot, 0.55),
       new KickerUper(kickUp, shoot),
       new RunOuttake(intake) 
     ));
 
   // shoot far
-  Player1.rightBumper().whileTrue(new ParallelCommandGroup(
+  Player1.rightTrigger().whileTrue(new ParallelCommandGroup(
       new Shoot(shoot, 0.68),
       new KickerUper(kickUp, shoot),
       new RunOuttake(intake) 
@@ -179,7 +179,7 @@ public class RobotContainer {
 
     //Player1.povUp().whileTrue(new Shoot(shoot, 0.65));
   
-    Player1.x().whileTrue(new KickerUper(kickUp, shoot));
+   // Player1.x().whileTrue(new KickerUper(kickUp, shoot));
   
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -210,8 +210,17 @@ public class RobotContainer {
 
     public void mapEventsToCommands()
     {
-        // replace null with command instance
-        // do this for all commands
+      // replace null with command instance
+      // do this for all commands
+      NamedCommands.registerCommand("intake", new RunOuttake(intake));
+      NamedCommands.registerCommand("shoot", new ParallelCommandGroup(
+      new Shoot(shoot, 0.68),
+      new KickerUper(kickUp, shoot),
+      new RunOuttake(intake) 
+      ));
+      NamedCommands.registerCommand("deploy intake", new ManualDeploy(intake, Constants.Intake.DeploySpeed));
+
+
     }
 
 }
